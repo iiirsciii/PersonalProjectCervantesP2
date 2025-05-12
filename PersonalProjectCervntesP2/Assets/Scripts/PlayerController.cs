@@ -17,12 +17,23 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        MovePlayer();
+        ConstrainPlayerPosition();
+    }
+
+    // Moves the player based on arrow key input
+    void MovePlayer()
+    {
         float horizontalInput = Input.GetAxis("Horizontal");
         float veritcalInput = Input.GetAxis("Vertical");
 
         playerRb.AddForce(Vector3.forward * speed * veritcalInput);
         playerRb.AddForce(Vector3.right * speed * horizontalInput);
+    }
 
+    // Prevent the player from leaving the top or bottom of the screen
+    void ConstrainPlayerPosition()
+    {
         if (transform.position.z < -zBound)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y, -zBound);
